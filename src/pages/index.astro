@@ -1,0 +1,243 @@
+---
+import Base from "../layouts/Base.astro";
+import Section from "../components/Section.astro";
+import Header from "../components/Header.astro";
+import MobileBar from "../components/MobileBar.astro";
+import VinForm from "../components/VinForm.astro";
+import UnitSpread from "../components/UnitSpread.astro";
+import FutureLink from "../components/FutureLink.astro";
+import Logo from "../components/Logo.astro";
+import { FUTURE, contacts, addresses, mail, units, categories, brands, footerLinks } from "../data/site";
+
+const title = "Стартери, генератори та комплектуючі — ParGo, Київ";
+const description = "Склад автоелектрики в Києві: стартери, генератори, бендикси, реле, регулятори, діодні мости. Підбір за VIN або артикулом, оплата при отриманні, обмін 14 днів.";
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "AutoPartsStore",
+      name: "ParGo",
+      slogan: "Запчастини які заводять",
+      telephone: "+380666698480",
+      email: contacts.email,
+      address: { "@type": "PostalAddress", streetAddress: "вул. Велика Кільцева, 4б/1", addressLocality: "Київ", addressCountry: "UA" },
+      openingHoursSpecification: [
+        { "@type": "OpeningHoursSpecification", dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"], opens: "09:00", closes: "18:00" },
+        { "@type": "OpeningHoursSpecification", dayOfWeek: "Saturday", opens: "09:00", closes: "16:00" },
+      ],
+      sameAs: [contacts.instagram, contacts.facebook],
+    },
+    { "@type": "WebSite", name: "ParGo", inLanguage: "uk" },
+  ],
+};
+---
+<Base lang="uk" title={title} description={description}>
+  <Fragment slot="head">
+    <link rel="preload" href="/fonts/FixelDisplay-ExtraBold.woff2" as="font" type="font/woff2" crossorigin />
+    <script type="application/ld+json" data-rec="SEO-R05" set:html={JSON.stringify(jsonLd)} />
+  </Fragment>
+
+  <Header slot="header" />
+
+  <!-- 1. Верстак: специализация + подбор -->
+  <Section id="pidbir" class="hero" rec="R-UX-01">
+    <div class="container hero__grid">
+      <h1 class="hero__title">Стартери, генератори та їхні <span class="nowrap">комплектуючі —</span> зі складу в Києві</h1>
+      <div class="hero__work">
+        <p class="hero__lead">Надішліть VIN-код або артикул — консультант підбере деталь і підкаже наявність та ціну. Для СТО — <a href="#sto">окремі умови</a>.</p>
+        <VinForm />
+      </div>
+      <ul class="hero__facts" data-rec="R-UX-03" aria-label="Умови покупки">
+        <li>Обмін або повернення протягом 14 днів, якщо деталь не підійшла</li>
+        <li>Доставка без передоплати — оплата при отриманні</li>
+        <li>Склад і самовивіз у Києві</li>
+      </ul>
+    </div>
+  </Section>
+
+  <!-- 2. Генератор і стартер по вузлах -->
+  <Section id="avtoelektryka" class="units" rec="R-UX-04">
+    <div class="hero__strip" data-reveal data-rec="R-UX-08,R-SP-10,G-R003,M-R003">
+      <picture class="strip">
+        <source media="(min-width: 768px)" type="image/avif" srcset="/images/generator-strip-640.avif 640w, /images/generator-strip-1280.avif 1280w, /images/generator-strip-1920.avif 1920w" sizes="100vw" />
+        <source media="(min-width: 768px)" type="image/webp" srcset="/images/generator-strip-640.webp 640w, /images/generator-strip-1280.webp 1280w, /images/generator-strip-1920.webp 1920w" sizes="100vw" />
+        <source type="image/avif" srcset="/images/generator-square-400.avif 400w, /images/generator-square-720.avif 720w" sizes="(max-width: 767px) 100vw, 400px" />
+        <source type="image/webp" srcset="/images/generator-square-400.webp 400w, /images/generator-square-720.webp 720w" sizes="(max-width: 767px) 100vw, 400px" />
+        <img src="/images/generator-strip-1280.webp" width="1920" height="812" alt="Генератор крупним планом: алюмінієвий корпус, шків і мідні обмотки" loading="lazy" decoding="async" />
+      </picture>
+    </div>
+    <div class="container">
+      <div class="section-head">
+        <h2>Генератор і стартер — по вузлах</h2>
+        <p class="section-head__lead">Основа складу ParGo — автоелектрика: агрегати у зборі й кожен їхній вузол окремо.</p>
+      </div>
+      {units.map((u, i) => <UnitSpread id={u.id} title={u.title} nodes={u.nodes} img={u.img} mirror={i % 2 === 1} />)}
+      <p class="units__restored">
+        <FutureLink note={FUTURE} class="node node--wide">Відновлені агрегати</FutureLink>
+        <span class="units__restored-note">реставровані агрегати, зокрема генератори</span>
+      </p>
+    </div>
+  </Section>
+
+  <!-- 3. Інші категорії -->
+  <Section id="katalog" class="catalog" rec="R-UX-04">
+    <div class="container catalog__grid">
+      <div class="catalog__head">
+        <h2>Інші категорії</h2>
+        <p>Запчастини для легкових і вантажних машин, зокрема агрегати та комплектуючі для вітчизняної техніки.</p>
+        <FutureLink note={FUTURE} class="btn btn--outline-light btn--future">Весь каталог</FutureLink>
+      </div>
+      <ul class="catalog__list">
+        {categories.map((c) => <li><FutureLink note={FUTURE} class="cat">{c}</FutureLink></li>)}
+      </ul>
+    </div>
+  </Section>
+
+  <!-- 4. Як ми підбираємо -->
+  <Section id="yak-pidbyraiemo" class="how">
+    <div class="container">
+      <h2 class="how__title">Як ми підбираємо — і що, якщо не підійшло</h2>
+      <div class="how__grid">
+        <div class="how__send">
+          <h3 class="how__sub">Що надіслати консультанту</h3>
+          <ol class="steps">
+            <li><span class="steps__what">VIN-код</span><span class="steps__note"><span class="mono">17 знаків</span>, є в техпаспорті авто</span></li>
+            <li><span class="steps__what">Держномер</span><span class="steps__note">номерний знак авто</span></li>
+            <li><span class="steps__what">Марка і модель</span><span class="steps__note">і що саме потрібно замінити</span></li>
+            <li><span class="steps__what">Артикул</span><span class="steps__note">номер деталі, якщо він відомий</span></li>
+          </ol>
+        </div>
+        <div class="how__return">
+          <h3 class="how__sub">Обмін або повернення — 14 днів</h3>
+          <p>Якщо деталь не підійшла, її можна обміняти або повернути протягом 14 днів. Умова — збережена упаковка і немає слідів встановлення.</p>
+          <p>Адреса для повернення — головний склад: Київ, вул. Велика Кільцева, 4б/1.</p>
+          <div class="btn-row">
+            <a class="btn btn--primary btn--nowrap" href={contacts.phoneHref} data-rec="R-UX-02">Подзвонити <span class="mono">{contacts.phoneText}</span></a>
+            <a class="btn btn--outline-dark" href={mail("Підбір запчастини", "VIN/артикул: \nАвто: \nЩо потрібно: ")} data-rec="R-UX-02">Написати на e-mail</a>
+          </div>
+          <FutureLink note={FUTURE} class="text-future">Гарантія і повернення: повні умови</FutureLink>
+        </div>
+      </div>
+    </div>
+  </Section>
+
+  <!-- 5. Бренди -->
+  <Section id="brendy" class="brands">
+    <div class="container">
+      <div class="brands__head">
+        <h2>Бренди та власний імпорт</h2>
+        <div class="brands__claims">
+          <p>За даними ParGo, компанія — офіційний імпортер і представник низки брендів, тож запчастини ви купуєте з перших рук.</p>
+          <p>Компанію заснували люди з 25-річним досвідом в автосервісі.</p>
+        </div>
+      </div>
+      <ul class="brands__list" aria-label="Бренди в каталозі">
+        {brands.map((b) => <li><FutureLink note={FUTURE} class="brand">{b}</FutureLink></li>)}
+      </ul>
+      <p class="brands__note">Сторінки брендів — розділ у розробці.</p>
+    </div>
+  </Section>
+
+  <!-- 6. Для СТО -->
+  <Section id="sto" class="sto" rec="R-UX-05">
+    <div class="container sto__grid">
+      <div class="sto__main">
+        <h2>Для СТО і майстрів</h2>
+        <p class="sto__big">Знижки від 5 до 40&nbsp;%</p>
+        <p class="sto__who">Для СТО, АТП, магазинів автозапчастин і майстрів автоелектрики. Розмір знижки та наявність на складах уточнюйте в менеджера.</p>
+      </div>
+      <div class="sto__side">
+        <ul class="sto__terms">
+          <li>Безготівковий розрахунок з податковою накладною</li>
+          <li>Асортимент на складах в Україні</li>
+        </ul>
+        <div class="btn-row">
+          <a class="btn btn--primary" href={contacts.phoneHref} data-rec="R-UX-02">Обговорити умови</a>
+          <a class="btn btn--outline-dark" href={mail("Співпраця СТО")} data-rec="R-UX-02">Написати щодо співпраці</a>
+        </div>
+      </div>
+    </div>
+  </Section>
+
+  <!-- 7. Доставка і оплата -->
+  <Section id="dostavka" class="delivery" rec="R-UX-09">
+    <div class="container">
+      <h2>Доставка і оплата</h2>
+      <div class="delivery__grid">
+        <div class="delivery__col">
+          <h3>Київ</h3>
+          <ul>
+            <li>Самовивіз з головного складу або пункту видачі</li>
+            <li>Кур'єр по Києву та найближчих селах</li>
+            <li>Таксі</li>
+          </ul>
+        </div>
+        <div class="delivery__col">
+          <h3>Україна</h3>
+          <ul>
+            <li>Нова Пошта</li>
+            <li>Delivery</li>
+          </ul>
+        </div>
+        <div class="delivery__pay">
+          <h3>Оплата</h3>
+          <p>Картка через LiqPay, POS-термінал, готівка, післяплата Нової Пошти, безготівковий розрахунок з податковою накладною.</p>
+          <p class="delivery__note">Умови безкоштовної доставки та вартість кур'єра уточнюйте в консультанта.</p>
+          <FutureLink note={FUTURE} class="text-future text-future--light">Детальніше про доставку</FutureLink>
+        </div>
+      </div>
+    </div>
+  </Section>
+
+  <!-- 8. Контакти -->
+  <Section id="kontakty" class="contacts" rec="R-UX-06">
+    <div class="container contacts__grid">
+      <div class="contacts__main">
+        <h2>Контакти</h2>
+        <a class="contacts__phone" href={contacts.phoneHref} data-rec="R-UX-02,S-R106">{contacts.phoneText}</a>
+        <dl class="hours">
+          {contacts.hours.map((h) => <div><dt>{h.days}</dt><dd>{h.time}</dd></div>)}
+        </dl>
+        <a class="contacts__mail" href={mail("Запит з сайту")} data-rec="R-UX-02">{contacts.email}</a>
+      </div>
+      <ul class="contacts__places">
+        {addresses.map((a) => (
+          <li class="place">
+            <h3 class="place__role">{a.role}</h3>
+            <p class="place__line">{a.line}</p>
+            <a class="place__map" href={a.map} target="_blank" rel="noopener">Відкрити на карті<span class="visually-hidden"> (нова вкладка)</span></a>
+          </li>
+        ))}
+        <li class="place place--social">
+          <h3 class="place__role">Соцмережі</h3>
+          <p class="place__social">
+            <a href={contacts.instagram} target="_blank" rel="noopener">Instagram<span class="visually-hidden"> (нова вкладка)</span></a>
+            <a href={contacts.facebook} target="_blank" rel="noopener">Facebook<span class="visually-hidden"> (нова вкладка)</span></a>
+          </p>
+        </li>
+      </ul>
+    </div>
+  </Section>
+
+  <footer slot="footer" id="footer" class="site-footer">
+    <div class="container site-footer__grid">
+      <div class="site-footer__brand">
+        <Logo />
+        <p class="site-footer__slogan">Запчастини які заводять</p>
+      </div>
+      <div class="site-footer__contacts">
+        <a class="site-footer__phone" href={contacts.phoneHref}>{contacts.phoneText}</a>
+        <a href={mail("Запит з сайту")}>{contacts.email}</a>
+        <p>Пн–Пт 09:00–18:00, Сб 09:00–16:00</p>
+      </div>
+      <nav class="site-footer__nav" aria-label="Розділи сайту" data-rec="R-UX-09">
+        <ul>
+          {footerLinks.map((l) => <li><FutureLink note={FUTURE} class="fl-footer">{l}</FutureLink></li>)}
+        </ul>
+      </nav>
+    </div>
+  </footer>
+  <MobileBar slot="footer" />
+  <script src="../scripts/home.ts"></script>
+</Base>

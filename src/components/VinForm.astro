@@ -1,0 +1,39 @@
+---
+// Real channel only: the form opens the visitor's mail client with a prepared letter (mailto), no fake "sent" state.
+// Without JS the browser builds mailto:?subject=…&body=<value> from the GET fields.
+import { contacts } from "../data/site";
+---
+<form class="vin" action={`mailto:${contacts.email}`} method="get" data-vin data-rec="R-UX-01,R-UX-07,M-R004">
+  <input type="hidden" name="subject" value="Підбір запчастини" />
+  <label class="vin__label" for="vin-input">VIN або артикул</label>
+  <div class="vin__row">
+    <input
+      class="vin__input"
+      id="vin-input"
+      name="body"
+      type="text"
+      inputmode="text"
+      autocomplete="off"
+      autocapitalize="characters"
+      spellcheck="false"
+      maxlength="40"
+      required
+      aria-describedby="vin-hint vin-error"
+      placeholder="17 знаків VIN або номер деталі"
+    />
+    <button class="vin__copy" type="button" data-vin-copy hidden>Скопіювати</button>
+  </div>
+  <div class="vin__meta" aria-live="polite">
+    <p class="vin__hint" id="vin-hint"><span data-vin-hint>VIN-код — 17 знаків з техпаспорта; артикул — номер деталі.</span> <span class="vin__count" data-vin-count></span></p>
+    <p class="vin__error" id="vin-error" data-vin-error hidden></p>
+  </div>
+  <div class="vin__actions">
+    <button class="btn btn--primary" type="submit">Надіслати запит</button>
+    <a class="btn btn--outline-dark btn--nowrap" href={contacts.phoneHref} data-rec="R-UX-02">Подзвонити <span class="mono">{contacts.phoneText}</span></a>
+  </div>
+  <p class="vin__status" data-hours-status>Приймаємо дзвінки Пн–Пт 09:00–18:00, Сб 09:00–16:00.</p>
+  <p class="vin__sent" data-vin-sent hidden tabindex="-1">
+    Відкрилась ваша пошта з готовим листом на {contacts.email} — залишилось натиснути «Надіслати».
+    Не відкрилась? Зателефонуйте <a href={contacts.phoneHref}>{contacts.phoneText}</a>.
+  </p>
+</form>

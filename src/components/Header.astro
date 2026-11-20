@@ -1,0 +1,50 @@
+---
+import FutureLink from "./FutureLink.astro";
+import Logo from "./Logo.astro";
+import { FUTURE, contacts, nav } from "../data/site";
+---
+<div class="utility">
+  <div class="container utility__in">
+    <p class="utility__hours">Графік: Пн–Пт 09:00–18:00, Сб 09:00–16:00, неділя — вихідний</p>
+    <div class="utility__links">
+      <FutureLink note={FUTURE} class="fl-light">RU</FutureLink>
+      <FutureLink note={FUTURE} class="fl-light">Вхід B2B/Роздріб</FutureLink>
+    </div>
+  </div>
+</div>
+<header class="site-header" data-header>
+  <div class="container site-header__in">
+    <Logo />
+    <nav class="primary-nav" aria-label="Основне меню">
+      <ul>
+        {nav.map((n) => <li><a href={n.href} data-nav>{n.label}</a></li>)}
+      </ul>
+    </nav>
+    <div class="site-header__actions">
+      <a class="header-phone" href={contacts.phoneHref} data-rec="R-UX-02">
+        <span class="header-phone__num">{contacts.phoneText}</span>
+        <span class="header-phone__hours">{contacts.hoursShort}</span>
+      </a>
+      <a class="header-call" href={contacts.phoneHref} data-rec="R-UX-02">Подзвонити</a>
+      <a class="btn btn--primary btn--sm header-vin" href="#pidbir" data-focus-vin>Надіслати VIN</a>
+      <details class="mnav" data-mnav>
+        <summary class="mnav__toggle"><span class="mnav__label">Меню</span><span class="mnav__icon" aria-hidden="true"></span></summary>
+        <div class="mnav__panel">
+          <nav aria-label="Меню розділів">
+            <ul class="mnav__list">
+              {nav.map((n) => <li><a href={n.href} data-nav>{n.label}</a></li>)}
+            </ul>
+          </nav>
+          <div class="mnav__extra">
+            <a class="mnav__phone" href={contacts.phoneHref}>{contacts.phoneText}</a>
+            <p class="mnav__hours">Пн–Пт 09:00–18:00, Сб 09:00–16:00</p>
+            <div class="mnav__future">
+              <FutureLink note={FUTURE} class="fl-light">RU</FutureLink>
+              <FutureLink note={FUTURE} class="fl-light">Вхід B2B/Роздріб</FutureLink>
+            </div>
+          </div>
+        </div>
+      </details>
+    </div>
+  </div>
+</header>

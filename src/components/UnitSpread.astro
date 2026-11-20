@@ -1,0 +1,23 @@
+---
+import FutureLink from "./FutureLink.astro";
+import Picture from "./Picture.astro";
+import { FUTURE } from "../data/site";
+interface Props {
+  id: string; title: string; nodes: string[]; mirror?: boolean;
+  img: { src: string; w: number; h: number; alt: string };
+}
+const { id, title, nodes, mirror = false, img } = Astro.props;
+---
+<article class:list={["unit", { "unit--mirror": mirror }]} aria-labelledby={`unit-${id}`}>
+  <div class="unit__head">
+    <h3 class="unit__title" id={`unit-${id}`}>{title}</h3>
+    <div class="unit__photo" data-reveal>
+      <Picture base={img.src} width={img.w} height={img.h} alt={img.alt} />
+    </div>
+  </div>
+  <ul class="nodes" aria-label={`${title}: вузли та комплектуючі`}>
+    {nodes.map((n) => (
+      <li><FutureLink note={FUTURE} class="node">{n}</FutureLink></li>
+    ))}
+  </ul>
+</article>

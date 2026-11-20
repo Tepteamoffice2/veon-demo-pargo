@@ -1,0 +1,84 @@
+/* Hallmark · shape: tool-first store page · genre: modern-minimal · theme: custom · job: buy · idea: "розбірка агрегату на верстаті: генератор і стартер по вузлах, кожен вузол веде до розмови зі складом за VIN або артикулом" · vibe: "майстерня, метал, точність, помаранчевий запуск" · surface: absolute
+ * paper: #242424 graphite and #EDEDEA aluminium · accent: #F28B00 · display: Fixel Display · body: Fixel Text · hero: верстак — поле VIN/артикул під заголовком над смугою фото генератора · nav: graphite bar, logo, six anchors, phone with hours, send-VIN button · footer: deep graphite, logo with slogan, contacts, future pages list · imagery: client photos · signature: typographic index of generator and starter units
+ * axes: dark/grotesk-heavy/chromatic-orange · posture: committed · contrast: pass · fold: pass · v2.0.0 */
+/* Hallmark · pre-emit critique: P4 H5 E4 S5 R4 V4 · weakest: P, a parts store argues little; the page argues that the unit list is the catalogue and the VIN field is the counter */
+/* Hallmark · waive 7b · white #FFFFFF only as catalog and brand paper and the VIN field, text on graphite stays aluminium · concept.md names white surface for the catalogue, brands and the field input */
+/* Hallmark · dismissed 49 · the call button in VinForm carries .btn--nowrap from site.css, which the per-folder lint of components cannot see */
+/* Hallmark · waive 39b · the VIN input alone stands 64px, every button stays 52px · concept.md makes the VIN field the workbench tool of the first screen, taller than the buttons on purpose */
+/* Hallmark · waive 59 · the 48px gap is the hero bottom edge meeting the generator photo strip · the strip is the workbench the hero sits on and leads into the units block, so it stays close */
+/* Hallmark · answered F19 · weights follow concept.md: display 800 for heads, 600 for unit names, text 400, 500 and 600 for body, labels and buttons */
+/* Client design tokens from design/concept.md (veon-concept: colors, fonts). */
+
+@font-face { font-family: "Fixel Display"; src: url("/fonts/FixelDisplay-ExtraBold.woff2") format("woff2"); font-weight: 800; font-style: normal; font-display: swap; }
+@font-face { font-family: "Fixel Display"; src: url("/fonts/FixelDisplay-SemiBold.woff2") format("woff2"); font-weight: 600; font-style: normal; font-display: swap; }
+@font-face { font-family: "Fixel Text"; src: url("/fonts/FixelText-Regular.woff2") format("woff2"); font-weight: 400; font-style: normal; font-display: swap; }
+@font-face { font-family: "Fixel Text"; src: url("/fonts/FixelText-Medium.woff2") format("woff2"); font-weight: 500; font-style: normal; font-display: swap; }
+@font-face { font-family: "Fixel Text"; src: url("/fonts/FixelText-SemiBold.woff2") format("woff2"); font-weight: 600; font-style: normal; font-display: swap; }
+@font-face { font-family: "JetBrains Mono"; src: url("/fonts/JetBrainsMono-Medium.woff2") format("woff2"); font-weight: 500; font-style: normal; font-display: swap; }
+/* Metric fallbacks keep layout shift low while the web fonts load. */
+@font-face { font-family: "Fixel Fallback"; src: local("Arial"); size-adjust: 104%; ascent-override: 92%; descent-override: 24%; }
+@font-face { font-family: "Mono Fallback"; src: local("Consolas"), local("Courier New"); size-adjust: 100%; }
+
+:root {
+  /* palette — roles from concept.md §5 */
+  --c-graphite: #242424;
+  --c-graphite-deep: #1B1B1B;
+  --c-aluminium: #EDEDEA;
+  --c-white: #FFFFFF;
+  --c-muted: #5C5C58;
+  --c-muted-dark: #A3A39E;
+  --c-orange: #F28B00;
+  --c-orange-hover: #D97C00;
+  --c-orange-text: #9A4F00;
+  --c-error-dark: #FF8A80;
+  --c-error-light: #B3261E;
+  --c-line-dark: #3A3A38;
+  --c-line-light: #CFCFCA;
+  --c-shadow: #11111166;
+
+  /* base demo names */
+  --color-bg: var(--c-aluminium);
+  --color-text: var(--c-graphite);
+  --color-accent: var(--c-orange);
+
+  --font-display: "Fixel Display", "Fixel Fallback", system-ui, sans-serif;
+  --font-body: "Fixel Text", "Fixel Fallback", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", "Mono Fallback", ui-monospace, monospace;
+
+  /* type scale: 14 · 16 · 20 · 28 · 44 · H1 */
+  --fs-14: 0.875rem;
+  --fs-16: 1rem;
+  --fs-20: 1.25rem;
+  --fs-28: 1.75rem;
+  --fs-44: 2.75rem;
+  --fs-node: clamp(1.75rem, 1.1rem + 1.6vw, 2.75rem);
+  --fs-h2: clamp(1.75rem, 1.05rem + 2.4vw, 2.75rem);
+  --fs-unit: clamp(2.75rem, 1.2rem + 5vw, 5.75rem);
+  --fs-h1: clamp(2.5rem, 6.4vw, 5.75rem);
+
+  /* spacing on an 8 base */
+  --s-1: 0.5rem;
+  --s-2: 1rem;
+  --s-3: 1.5rem;
+  --s-4: 2rem;
+  --s-6: 3rem;
+  --s-9: 4.5rem;
+  --s-14: 7rem;
+  --section-y: clamp(4.5rem, 2.8rem + 5vw, 7rem);
+
+  --radius: 4px;
+  --ease-out: cubic-bezier(.2, .7, .2, 1);
+  --dur: 600ms;
+  --space: clamp(1.25rem, 0.6rem + 2.2vw, 3rem);
+  --gutter: 1.5rem;
+  --container: 1320px;
+  --header-h: 72px;
+  --bar-h: 0px;
+  --tap: 52px;
+}
+@media (max-width: 1023.98px) {
+  :root { --header-h: 56px; }
+}
+@media (max-width: 767.98px) {
+  :root { --bar-h: 64px; }
+}
