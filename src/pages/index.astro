@@ -7,8 +7,10 @@ import VinForm from "../components/VinForm.astro";
 import UnitSpread from "../components/UnitSpread.astro";
 import FutureLink from "../components/FutureLink.astro";
 import Logo from "../components/Logo.astro";
+import fontExtraBold from "../assets/fonts/FixelDisplay-ExtraBold.woff2?url";
 import { FUTURE, contacts, addresses, mail, units, categories, brands, footerLinks } from "../data/site";
 
+const base = import.meta.env.BASE_URL;
 const title = "Стартери, генератори та комплектуючі — ParGo, Київ";
 const description = "Склад автоелектрики в Києві: стартери, генератори, бендикси, реле, регулятори, діодні мости. Підбір за VIN або артикулом, оплата при отриманні, обмін 14 днів.";
 
@@ -34,7 +36,7 @@ const jsonLd = {
 ---
 <Base lang="uk" title={title} description={description}>
   <Fragment slot="head">
-    <link rel="preload" href="/fonts/FixelDisplay-ExtraBold.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={fontExtraBold} as="font" type="font/woff2" crossorigin />
     <script type="application/ld+json" data-rec="SEO-R05" set:html={JSON.stringify(jsonLd)} />
   </Fragment>
 
@@ -60,11 +62,11 @@ const jsonLd = {
   <Section id="avtoelektryka" class="units" rec="R-UX-04">
     <div class="hero__strip" data-reveal data-rec="R-UX-08,R-SP-10,G-R003,M-R003">
       <picture class="strip">
-        <source media="(min-width: 768px)" type="image/avif" srcset="/images/generator-strip-640.avif 640w, /images/generator-strip-1280.avif 1280w, /images/generator-strip-1920.avif 1920w" sizes="100vw" />
-        <source media="(min-width: 768px)" type="image/webp" srcset="/images/generator-strip-640.webp 640w, /images/generator-strip-1280.webp 1280w, /images/generator-strip-1920.webp 1920w" sizes="100vw" />
-        <source type="image/avif" srcset="/images/generator-square-400.avif 400w, /images/generator-square-720.avif 720w" sizes="(max-width: 767px) 100vw, 400px" />
-        <source type="image/webp" srcset="/images/generator-square-400.webp 400w, /images/generator-square-720.webp 720w" sizes="(max-width: 767px) 100vw, 400px" />
-        <img src="/images/generator-strip-1280.webp" width="1920" height="812" alt="Генератор крупним планом: алюмінієвий корпус, шків і мідні обмотки" loading="lazy" decoding="async" />
+        <source media="(min-width: 768px)" type="image/avif" srcset={`${base}images/generator-strip-640.avif 640w, ${base}images/generator-strip-1280.avif 1280w, ${base}images/generator-strip-1920.avif 1920w`} sizes="100vw" />
+        <source media="(min-width: 768px)" type="image/webp" srcset={`${base}images/generator-strip-640.webp 640w, ${base}images/generator-strip-1280.webp 1280w, ${base}images/generator-strip-1920.webp 1920w`} sizes="100vw" />
+        <source type="image/avif" srcset={`${base}images/generator-square-400.avif 400w, ${base}images/generator-square-720.avif 720w`} sizes="(max-width: 767px) 100vw, 400px" />
+        <source type="image/webp" srcset={`${base}images/generator-square-400.webp 400w, ${base}images/generator-square-720.webp 720w`} sizes="(max-width: 767px) 100vw, 400px" />
+        <img src={`${base}images/generator-strip-1280.webp`} width="1920" height="812" alt="Генератор крупним планом: алюмінієвий корпус, шків і мідні обмотки" loading="lazy" decoding="async" />
       </picture>
     </div>
     <div class="container">
